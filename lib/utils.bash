@@ -32,8 +32,6 @@ list_github_tags() {
 }
 
 list_all_versions() {
-	# TODO: Adapt this. By default we simply list the tag names from GitHub releases.
-	# Change this function if helix has other means of determining installable versions.
 	list_github_tags
 }
 
@@ -41,9 +39,10 @@ download_release() {
 	local version filename url
 	version="$1"
 	filename="$2"
+	architecture="x86_64"
+	os="linux"
 
-	# TODO: Adapt the release URL convention for helix
-	url="$GH_REPO/archive/v${version}.tar.gz"
+	url="$GH_REPO/archive/helix-${version}-${architecture}-${os}.tar.gz"
 
 	echo "* Downloading $TOOL_NAME release $version..."
 	curl "${curl_opts[@]}" -o "$filename" -C - "$url" || fail "Could not download $url"
