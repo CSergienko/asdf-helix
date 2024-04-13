@@ -17,4 +17,5 @@ format:
 		./**/*
 
 test:
-	asdf plugin test helix https://github.com/CSergienko/asdf-helix.git "hx --version"
+	#!/usr/bin/env bash
+	asdf plugin test helix https://github.com/CSergienko/asdf-helix.git "hx --health"

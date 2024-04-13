@@ -4,7 +4,7 @@ set -euo pipefail
 
 GH_REPO="https://github.com/helix-editor/helix"
 TOOL_NAME="helix"
-TOOL_TEST="hx --version"
+TOOL_TEST="hx --health"
 
 fail() {
 	echo -e "asdf-$TOOL_NAME: $*"
@@ -38,8 +38,8 @@ download_release() {
 	local version filename url
 	version="$1"
 	filename="$2"
-	architecture="x86_64"
-	os="linux"
+	architecture="$(uname -m)"
+	os="$(uname | tr '[:upper:]' '[:lower:]')"
 
 	url="$GH_REPO/releases/download/${version}/helix-${version}-${architecture}-${os}.tar.xz"
 
