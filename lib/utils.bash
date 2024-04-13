@@ -41,6 +41,9 @@ download_release() {
 	architecture="$(uname -m)"
 	os="$(uname | tr '[:upper:]' '[:lower:]')"
 
+	if [ "$os" = "darwin" ]; then
+		os="macos"
+	fi
 	url="$GH_REPO/releases/download/${version}/helix-${version}-${architecture}-${os}.tar.xz"
 
 	echo "* Downloading $TOOL_NAME release $version..."
