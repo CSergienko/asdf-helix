@@ -2,7 +2,7 @@
 
 # asdf-helix [![Build](https://github.com/CSergienko/asdf-helix/actions/workflows/build.yml/badge.svg)](https://github.com/CSergienko/asdf-helix/actions/workflows/build.yml) [![Lint](https://github.com/CSergienko/asdf-helix/actions/workflows/lint.yml/badge.svg)](https://github.com/CSergienko/asdf-helix/actions/workflows/lint.yml)
 
-[helix](https://github.com/CSergienko/asdf-helix) plugin for the [asdf version manager](https://asdf-vm.com).
+[helix](https://helix-editor.com/) plugin for the [asdf version manager](https://asdf-vm.com).
 
 </div>
 
