@@ -2,8 +2,7 @@
 
 set -euo pipefail
 
-# TODO: Ensure this is the correct GitHub homepage where releases can be downloaded for helix.
-GH_REPO="https://github.com/CSergienko/asdf-helix"
+GH_REPO="https://github.com/helix-editor/helix"
 TOOL_NAME="helix"
 TOOL_TEST="hx --version"
 
@@ -25,9 +24,11 @@ sort_versions() {
 }
 
 list_github_tags() {
-	git ls-remote --tags --refs "$GH_REPO" |
-		grep -o 'refs/tags/.*' | cut -d/ -f3- |
-		sed 's/^v//' # NOTE: You might want to adapt this sed to remove non-version strings from tags
+	git ls-remote --heads --tags $GH_REPO |
+		grep refs/tags |
+		cut -d '/' -f 3 |
+		grep -v '\^{}' |
+		sed -E 's/^(v)([0-9]+\.[0-9]+\.[0-9]+)$/\2/'
 }
 
 list_all_versions() {
