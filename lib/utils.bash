@@ -42,7 +42,7 @@ download_release() {
 	architecture="x86_64"
 	os="linux"
 
-	url="$GH_REPO/archive/helix-${version}-${architecture}-${os}.tar.gz"
+	url="$GH_REPO/archive/helix-${version}-${architecture}-${os}.tar.xz"
 
 	echo "* Downloading $TOOL_NAME release $version..."
 	curl "${curl_opts[@]}" -o "$filename" -C - "$url" || fail "Could not download $url"
