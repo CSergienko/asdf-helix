@@ -2,7 +2,7 @@
 
 # asdf-helix [![Build](https://github.com/CSergienko/asdf-helix/actions/workflows/build.yml/badge.svg)](https://github.com/CSergienko/asdf-helix/actions/workflows/build.yml) [![Lint](https://github.com/CSergienko/asdf-helix/actions/workflows/lint.yml/badge.svg)](https://github.com/CSergienko/asdf-helix/actions/workflows/lint.yml)
 
-[helix](https://github.com/CSergienko/asdf-helix) plugin for the [asdf version manager](https://asdf-vm.com).
+[helix](https://helix-editor.com/) plugin for the [asdf version manager](https://asdf-vm.com).
 
 </div>
 
@@ -15,10 +15,7 @@
 
 # Dependencies
 
-**TODO: adapt this section**
-
 - `bash`, `curl`, `tar`, and [POSIX utilities](https://pubs.opengroup.org/onlinepubs/9699919799/idx/utilities.html).
-- `SOME_ENV_VAR`: set this environment variable in your shell config to load the correct version of tool x.
 
 # Install
 
@@ -44,6 +41,7 @@ asdf global helix latest
 
 # Now helix commands are available
 hx --version
+hx --health
 ```
 
 Check [asdf](https://github.com/asdf-vm/asdf) readme for more instructions on how to

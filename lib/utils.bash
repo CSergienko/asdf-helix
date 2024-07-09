@@ -2,10 +2,9 @@
 
 set -euo pipefail
 
-# TODO: Ensure this is the correct GitHub homepage where releases can be downloaded for helix.
-GH_REPO="https://github.com/CSergienko/asdf-helix"
+GH_REPO="https://github.com/helix-editor/helix"
 TOOL_NAME="helix"
-TOOL_TEST="hx --version"
+TOOL_TEST="hx --health"
 
 fail() {
 	echo -e "asdf-$TOOL_NAME: $*"
@@ -14,7 +13,6 @@ fail() {
 
 curl_opts=(-fsSL)
 
-# NOTE: You might want to remove this if helix is not hosted on GitHub releases.
 if [ -n "${GITHUB_API_TOKEN:-}" ]; then
 	curl_opts=("${curl_opts[@]}" -H "Authorization: token $GITHUB_API_TOKEN")
 fi
@@ -25,14 +23,14 @@ sort_versions() {
 }
 
 list_github_tags() {
-	git ls-remote --tags --refs "$GH_REPO" |
-		grep -o 'refs/tags/.*' | cut -d/ -f3- |
-		sed 's/^v//' # NOTE: You might want to adapt this sed to remove non-version strings from tags
+	git ls-remote --heads --tags $GH_REPO |
+		grep refs/tags |
+		cut -d '/' -f 3 |
+		grep -v '\^{}' |
+		sed -E 's/^(v)([0-9]+\.[0-9]+\.[0-9]+)$/\2/'
 }
 
 list_all_versions() {
-	# TODO: Adapt this. By default we simply list the tag names from GitHub releases.
-	# Change this function if helix has other means of determining installable versions.
 	list_github_tags
 }
 
@@ -40,9 +38,13 @@ download_release() {
 	local version filename url
 	version="$1"
 	filename="$2"
+	architecture="$(uname -m)"
+	os="$(uname | tr '[:upper:]' '[:lower:]')"
 
-	# TODO: Adapt the release URL convention for helix
-	url="$GH_REPO/archive/v${version}.tar.gz"
+	if [ "$os" = "darwin" ]; then
+		os="macos"
+	fi
+	url="$GH_REPO/releases/download/${version}/helix-${version}-${architecture}-${os}.tar.xz"
 
 	echo "* Downloading $TOOL_NAME release $version..."
 	curl "${curl_opts[@]}" -o "$filename" -C - "$url" || fail "Could not download $url"
@@ -61,7 +63,6 @@ install_version() {
 		mkdir -p "$install_path"
 		cp -r "$ASDF_DOWNLOAD_PATH"/* "$install_path"
 
-		# TODO: Assert helix executable exists.
 		local tool_cmd
 		tool_cmd="$(echo "$TOOL_TEST" | cut -d' ' -f1)"
 		test -x "$install_path/$tool_cmd" || fail "Expected $install_path/$tool_cmd to be executable."
